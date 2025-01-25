@@ -30,7 +30,9 @@ from numba import njit
 @njit
 def f():
   rng = numbapcg.PCG32()
-  rng.randint(100)
+  return rng.randint(100)
+
+f()
 ```
 
 ## Benchmarks
