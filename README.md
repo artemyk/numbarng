@@ -6,6 +6,14 @@ Implementation of the  [PCG](https://en.wikipedia.org/wiki/Permuted_congruential
 
 Our case is based on an adaptation of code by Daniel Lemire from the (fastrand)[https://github.com/lemire/fastrand/] repository (see (file)[https://github.com/lemire/fastrand/blob/master/fastrandmodule.c])
 
+## Installation
+
+You can install this by running
+```
+python -m pip install https://github.com/artemyk/numbapcg/archive/refs/heads/main.zip
+```
+
+
 ## Examples
 ```python
 import numbapcg
