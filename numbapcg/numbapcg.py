@@ -96,7 +96,7 @@ class PCG32(object):
         N : int
             How many numbers to generate
         """
-        z = np.zeros(N, dtype='uint32')
+        z = np.empty(N, dtype='uint32')
         for i in range(N):
             z[i] = self.randint(high)
         return z

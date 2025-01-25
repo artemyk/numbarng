@@ -40,12 +40,12 @@ f()
 Benchmarks on i5 2GHz MacBook Pro:
 ```
 % python benchmark.py
-Adding 100000000 random numbers in range [0,100) in numba
-[numbapcg rng].randint              took 0.20613 seconds
-np.random.randint                   took 0.60596 seconds
-random.randint                      took 0.52202 seconds
+[numbapcg rng].randint              took 0.20945 seconds
+np.random.randint                   took 0.61134 seconds
+random.randint                      took 0.53172 seconds
 Making array of 100000000 random numbers in range [0,100)
-[numbapcg rng].randint_array        took 0.40888 seconds
-[numpy    rng].integers             took 0.59069 seconds
-np.random.randint                   took 1.13416 seconds
-numba + random.random               took 1.61994 seconds```
+[numbapcg rng].randint_array        took 0.38290 seconds
+[numpy    rng].integers             took 0.63654 seconds
+np.random.randint                   took 1.16815 seconds
+numba + random.random               took 1.58080 seconds
+```
