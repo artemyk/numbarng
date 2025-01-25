@@ -4,7 +4,7 @@ Implementation of the  [PCG](https://en.wikipedia.org/wiki/Permuted_congruential
 
 * O'Neill, Melissa E.  PCG: A Family of Simple Fast Space-Efficient Statistically Good Algorithms for Random Number Generation [(PDF)](https://www.pcg-random.org/pdf/hmc-cs-2014-0905.pdf) (Technical report). Harvey Mudd College. HMC-CS-2014-0905.
 
-Our case is based on an adaptation of code by Daniel Lemire from the (fastrand)[https://github.com/lemire/fastrand/] repository (see (file)[https://github.com/lemire/fastrand/blob/master/fastrandmodule.c])
+Our case is based on an adaptation of code by Daniel Lemire from the [fastrand](https://github.com/lemire/fastrand/) repository ([fastrandmodule.c](https://github.com/lemire/fastrand/blob/master/fastrandmodule.c]))
 
 ## Installation
 
