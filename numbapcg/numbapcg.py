@@ -2,6 +2,8 @@ from numba import uint64, uint32
 from numba.experimental import jitclass
 import numpy as np
 
+multiplier = uint64(6364136223846793005)
+
 @jitclass([('rng_state', uint64),('rng_inc', uint64)])
 class PCG32(object):
     """
@@ -38,14 +40,14 @@ class PCG32(object):
             new increment
         """
         self.rng_inc = rng_inc
-    
-    def pcg32_random(self):
-        C = uint64(6364136223846793005)
-        oldstate = self.rng_state
-        self.rng_state = oldstate * C + self.rng_inc
-        xorshifted = uint32(((oldstate >> 18) ^ oldstate) >> 27)
-        rot = uint32(oldstate >> 59)
-        return uint32( (xorshifted >> rot) | (xorshifted << ((-rot) & 31)) )
+
+    # Manually inlined for slightly faster performance    
+    # def pcg32_random(self):
+    #     oldstate = self.rng_state
+    #     self.rng_state = oldstate * multiplier + self.rng_inc
+    #     xorshifted = uint32(((oldstate >> 18) ^ oldstate) >> 27)
+    #     rot = uint32(oldstate >> 59)
+    #     return uint32( (xorshifted >> rot) | (xorshifted << ((-rot) & 31)) )
 
     def randint(self, high):
         """
@@ -56,15 +58,31 @@ class PCG32(object):
         high : int
             Random number will fall in the range [0, high)
         """
-        random32bit = uint64(self.pcg32_random())
-        multiresult = uint64(random32bit * high)
-        leftover    = uint32(multiresult)
+
+        # PCG core 
+        oldstate = self.rng_state
+        self.rng_state = oldstate * multiplier + self.rng_inc
+        xorshifted     = uint32(((oldstate >> 18) ^ oldstate) >> 27)
+        rot            = uint32(oldstate >> 59)
+        random32bit    = uint64( (xorshifted >> rot) | (xorshifted << ((-rot) & 31)) )
+        # Done
+
+
+        multiresult    = uint64(random32bit * high)
+        leftover       = uint32(multiresult)
         if (leftover < high):
             threshold = uint32(-high % high)
             while (leftover < threshold):
-                random32bit = uint64(self.pcg32_random())
-                multiresult = uint64(random32bit * high)
-                leftover    = uint32(multiresult)
+                # PCG core 
+                oldstate = self.rng_state
+                self.rng_state = oldstate * multiplier + self.rng_inc
+                xorshifted     = uint32(((oldstate >> 18) ^ oldstate) >> 27)
+                rot            = uint32(oldstate >> 59)
+                random32bit    = uint64( (xorshifted >> rot) | (xorshifted << ((-rot) & 31)) )
+                # Done
+
+                multiresult    = uint64(random32bit * high)
+                leftover       = uint32(multiresult)
         return uint32(multiresult >> 32)
 
     def randint_array(self, high, N):

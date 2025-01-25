@@ -41,12 +41,11 @@ Benchmarks on i5 2GHz MacBook Pro:
 ```
 % python benchmark.py
 Adding 100000000 random numbers in range [0,100) in numba
-[numbapcg rng].randint              took 0.30527 seconds
-np.random.randint                   took 1.07643 seconds
-random.randint                      took 0.73764 seconds
+[numbapcg rng].randint              took 0.20613 seconds
+np.random.randint                   took 0.60596 seconds
+random.randint                      took 0.52202 seconds
 Making array of 100000000 random numbers in range [0,100)
-[numbapcg rng].randint_array        took 0.57106 seconds
-[numpy    rng].integers             took 0.81355 seconds
-np.random.randint                   took 1.63645 seconds
-numba + random.random               took 2.17628 seconds
-```
+[numbapcg rng].randint_array        took 0.40888 seconds
+[numpy    rng].integers             took 0.59069 seconds
+np.random.randint                   took 1.13416 seconds
+numba + random.random               took 1.61994 seconds```
