@@ -1,4 +1,4 @@
-# numbarand
+# numbapcg
 
 Implementation of the  [PCG](https://en.wikipedia.org/wiki/Permuted_congruential_generator) random number generator in numba for Python. PCG (Permuted congruential generator) is a fast generator for random 32-bit integers.
 
