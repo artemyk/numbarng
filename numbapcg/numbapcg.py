@@ -19,6 +19,7 @@ class PCG32(object):
         self.rng_state = uint64(np.random.randint(2**63-1))
         self.rng_inc   = uint64(0xda3e39cb94b95bdb)
 
+
     def set_state(self, rng_state):
         """
         Set state of the generator. Useful for setting a new seed.
@@ -29,6 +30,7 @@ class PCG32(object):
             new state
         """
         self.rng_state = rng_state
+
         
     def set_inc(self, rng_inc):
         """
@@ -41,13 +43,15 @@ class PCG32(object):
         """
         self.rng_inc = rng_inc
 
+
     # Manually inlined for slightly faster performance    
-    # def pcg32_random(self):
-    #     oldstate = self.rng_state
-    #     self.rng_state = oldstate * multiplier + self.rng_inc
-    #     xorshifted = uint32(((oldstate >> 18) ^ oldstate) >> 27)
-    #     rot = uint32(oldstate >> 59)
-    #     return uint32( (xorshifted >> rot) | (xorshifted << ((-rot) & 31)) )
+    def pcg32_random(self):
+        oldstate = self.rng_state
+        self.rng_state = oldstate * multiplier + self.rng_inc
+        xorshifted = uint32(((oldstate >> 18) ^ oldstate) >> 27)
+        rot = uint32(oldstate >> 59)
+        return uint32( (xorshifted >> rot) | (xorshifted << ((-rot) & 31)) )
+
 
     def randint(self, high):
         """
@@ -59,13 +63,7 @@ class PCG32(object):
             Random number will fall in the range [0, high)
         """
 
-        # PCG core 
-        oldstate = self.rng_state
-        self.rng_state = oldstate * multiplier + self.rng_inc
-        xorshifted     = uint32(((oldstate >> 18) ^ oldstate) >> 27)
-        rot            = uint32(oldstate >> 59)
-        random32bit    = uint64( (xorshifted >> rot) | (xorshifted << ((-rot) & 31)) )
-        # Done
+        random32bit    = uint64( self.pcg32_random() )
 
 
         multiresult    = uint64(random32bit * high)
@@ -73,17 +71,12 @@ class PCG32(object):
         if (leftover < high):
             threshold = uint32(-high % high)
             while (leftover < threshold):
-                # PCG core 
-                oldstate = self.rng_state
-                self.rng_state = oldstate * multiplier + self.rng_inc
-                xorshifted     = uint32(((oldstate >> 18) ^ oldstate) >> 27)
-                rot            = uint32(oldstate >> 59)
-                random32bit    = uint64( (xorshifted >> rot) | (xorshifted << ((-rot) & 31)) )
-                # Done
+                random32bit    = uint64( self.pcg32_random() )
 
                 multiresult    = uint64(random32bit * high)
                 leftover       = uint32(multiresult)
         return uint32(multiresult >> 32)
+
 
     def randint_array(self, high, N):
         """
