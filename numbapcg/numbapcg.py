@@ -44,8 +44,10 @@ class PCG32(object):
         self.rng_inc = rng_inc
 
 
-    # Manually inlined for slightly faster performance    
     def pcg32_random(self):
+        """
+        Core of the PCG32 generator.
+        """
         oldstate = self.rng_state
         self.rng_state = oldstate * multiplier + self.rng_inc
         xorshifted = uint32(((oldstate >> 18) ^ oldstate) >> 27)
