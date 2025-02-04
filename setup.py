@@ -1,12 +1,12 @@
 from setuptools import setup
 
 setup(
-   name='numbapcg',
+   name='numbarng',
    version='0.1',
-   description='PCG 32-bit random number generator for numba',
+   description='Fast random numbers for numba',
    author='Artemy Kolchinsky',
    author_email='artemyk@gmail.com',
-   packages=['numbapcg'],
+   packages=['numbarng'],
    install_requires=['numpy', 'numba',],
 )
 

@@ -3,7 +3,7 @@ import random
 import time
 from numba import njit, uint32, uint64
 
-import numbapcg
+import numbarng
 
 
 N    = 100000000 # number of iterations
@@ -57,8 +57,8 @@ def make_randint_array_test(cl):
 
 
 to_run = []
-for cl in numbapcg.RNG_CLASSES:
-	to_run.append( (make_randint_test(cl),  f'numbapcg.{cl.__name__}().randint'))
+for cl in numbarng.RNG_CLASSES:
+	to_run.append( (make_randint_test(cl),  f'numbarng.{cl.__name__}().randint'))
 to_run.append( (test_np_random, 'np.random.randint') )
 to_run.append( (test_random,    'random.randint') )
 
@@ -82,8 +82,8 @@ def random_list(high, N):
 
 
 to_run2 = []
-for cl in numbapcg.RNG_CLASSES:
-	to_run2.append( (make_randint_array_test(cl),  f'numbapcg.{cl.__name__}().randint_array'))
+for cl in numbarng.RNG_CLASSES:
+	to_run2.append( (make_randint_array_test(cl),  f'numbarng.{cl.__name__}().randint_array'))
 rng_np = np.random.default_rng()
 to_run2.append( (lambda: rng_np.integers(high,size=N)      , '[numpy rng].integers') )
 to_run2.append( (lambda: np.random.randint(high, size=(N,)), 'np.random.randint') )

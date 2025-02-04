@@ -1,4 +1,4 @@
-import numbapcg
+import numbarng
 import numpy as np
 import unittest
 from numba import njit 
@@ -18,7 +18,7 @@ def run_numba_tests(rng):
 
 class TestObj(unittest.TestCase):
         def test_methods(self):
-            for cl in numbapcg.RNG_CLASSES:
+            for cl in numbarng.RNG_CLASSES:
                 rng = cl()
                 rng.randint_array(100,100)
                 rng.random32bit()
@@ -31,11 +31,11 @@ class TestObj(unittest.TestCase):
 
 
         def test_methods_numba(self):
-            for cl in numbapcg.RNG_CLASSES:
+            for cl in numbarng.RNG_CLASSES:
                 run_numba_tests(cl())
 
         def test_randint(self):
-            for cl in numbapcg.RNG_CLASSES:
+            for cl in numbarng.RNG_CLASSES:
                 rng = cl()
                 N = 1000000
                 high = 100
