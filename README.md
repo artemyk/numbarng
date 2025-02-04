@@ -66,3 +66,20 @@ numbarng.SplitMix().randint_array   took 0.10672 seconds
 np.random.randint                   took 0.57670 seconds
 numba + random.random               took 0.81265 seconds
 ```
+
+Benchmark on Intel i5 2GHz:
+``` % python benchmark.py 
+Adding 100000000 random numbers in range [0,100) in numba
+numbarng.PCG().randint              took 0.27380 seconds
+numbarng.Wyhash().randint           took 0.19804 seconds
+numbarng.SplitMix().randint         took 0.21359 seconds
+np.random.randint                   took 0.73841 seconds
+random.randint                      took 0.68036 seconds
+Making array of 100000000 random numbers in range [0,100)
+numbarng.PCG().randint_array        took 0.43530 seconds
+numbarng.Wyhash().randint_array     took 0.37839 seconds
+numbarng.SplitMix().randint_array   took 0.39133 seconds
+[numpy rng].integers                took 0.77404 seconds
+np.random.randint                   took 1.23960 seconds
+numba + random.random               took 1.81844 seconds
+```
