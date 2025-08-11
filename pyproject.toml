@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "numbarng"
+version = "0.2"
+description = "Fast random numbers for numba"
+authors = [
+  { name = "Artemy Kolchinsky", email = "artemyk@gmail.com" }
+]
+dependencies = [
+  "numpy",
+  "numba"
+]
+  
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["numbarng"]
