@@ -34,7 +34,7 @@ def _randint(rng, high : uint32):
 
 
 @njit(inline='always', fastmath=True, cache=True)
-def _randint_array(rng, high, N):
+def _randint_array(rng, high, size):
     """
     Return a numpy array of random integers.
 
@@ -44,11 +44,11 @@ def _randint_array(rng, high, N):
         Random number generator
     high : int
         Random numbers will fall in the range [0, high)
-    N : int
+    size : int
         How many numbers to generate
     """
-    z = np.empty(N, dtype='uint32')
-    for i in range(N):
+    z = np.empty(size, dtype='uint32')
+    for i in range(size):
         z[i] = _randint(rng, high)
     return z
 
@@ -77,8 +77,8 @@ class Wyhash:
 
     def randint(self, high):
         return _randint(self.random32bit, high)
-    def randint_array(self, high, N):
-        return _randint_array(self.random32bit, high, N)
+    def randint_array(self, high, size):
+        return _randint_array(self.random32bit, high, size)
 
 
 @jitclass
@@ -110,8 +110,8 @@ class SplitMix:
 
     def randint(self, high):
         return _randint(self.random32bit, high)
-    def randint_array(self, high, N):
-        return _randint_array(self.random32bit, high, N)
+    def randint_array(self, high, size):
+        return _randint_array(self.random32bit, high, size)
 
 # @jitclass
 # class SplitMix64:
@@ -142,8 +142,8 @@ class SplitMix:
 
 #     def randint(self, high):
 #         return _randint(self, high)
-#     def randint_array(self, high, N):
-#         return _randint_array(self, high, N)
+#     def randint_array(self, high, size):
+#         return _randint_array(self, high, size)
 
 # x ^= x >> 32;
 # x *= 0xe9846af9b1a615d;
@@ -202,8 +202,8 @@ class PCG(object):
 
     def randint(self, high):
         return _randint(self.random32bit, high)
-    def randint_array(self, high, N):
-        return _randint_array(self.random32bit, high, N)
+    def randint_array(self, high, size):
+        return _randint_array(self.random32bit, high, size)
 
 
 RNG_CLASSES = [PCG, Wyhash, SplitMix]
